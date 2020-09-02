@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">GADS Leaderboard</string>
+    <string name="title_activity_leader_board">LeaderBoardActivity</string>
+    <string name="tab_text_1">Learning Leaders</string>
+    <string name="tab_text_2">Skill IQ Leaders</string>
+    <string name="leaner_hours">leaner_hours</string>
+    <string name="leaner_country">leaner_country</string>
+    <string name="leaner_name">leaner_name</string>
+    <string name="submit">Submit</string>
+    <string name="project_submission">Project Submission</string>
+    <string name="git_hub_link">git hub link</string>
+    <string name="email_address">email Address</string>
+    <string name="submission_not_successful">Submission not Successful</string>
+    <string name="leaderboad">LEADERBOAD</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 </resources>
