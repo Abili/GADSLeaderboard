@@ -14,4 +14,5 @@
     <string name="leaderboad">LEADERBOAD</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="submission_sucessful">Submission Sucessful</string>
 </resources>

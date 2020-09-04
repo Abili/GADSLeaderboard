@@ -3,10 +3,12 @@ package com.raisac.gadsleaderboard.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.raisac.gadsleaderboard.R;
 import com.raisac.gadsleaderboard.apis.LeaderBoardService;
 import com.raisac.gadsleaderboard.apis.ServiceBuilder;
@@ -27,14 +30,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SubmitActivity extends AppCompatActivity implements View.OnClickListener {
+public class SubmitActivity extends AppCompatActivity {
 
 
+    public static final String TAG = SubmitActivity.class.getSimpleName();
     private LeaderBoardService mLeaderBoardService;
     private MutableLiveData<List<LearnersResponse>> mListMutableLiveData;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     String keyword;
-    private AlertDialog.Builder mDialog;
+    private BottomSheetDialog mDialog;
     private View mMyviews;
     private EditText mFirstName;
     private EditText mLastName;
@@ -63,9 +67,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         mGitHubLink = findViewById(R.id.githubLink);
 
         submit.setOnClickListener(view -> {
-
-            dialogsSuccess(R.layout.areyou_sure_dialog);
-            mMyviews.setOnClickListener(this);
+            projectSumit(mFirstName, mLastName, mEmaildress, mGitHubLink);
 
         });
     }
@@ -86,54 +88,55 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         } else if (TextUtils.isEmpty(github)) {
             gitHubLink.setError("Required");
         } else {
+            openDialog(R.layout.areyou_sure_dialog);
+
             projectSubmit.setFirstName(firs_name);
             projectSubmit.setLastName(last_name);
             projectSubmit.setEmailAddress(email);
             projectSubmit.setLintToProject(github);
+
+            Button sure = mDialog.findViewById(R.id.sure_btn);
+            ImageView cancel = mDialog.findViewById(R.id.cancel_submission);
+
+            assert sure != null;
+            sure.setOnClickListener(v -> {
+                LeaderBoardService ideaService = ServiceBuilder.buildService(LeaderBoardService.class);
+                Call<SubmitProject> creatRequest = ideaService.submitProject(
+                        projectSubmit.getEmailAddress(),
+                        projectSubmit.getFirstName(),
+                        projectSubmit.getLastName(),
+                        projectSubmit.getLintToProject());
+                creatRequest.enqueue(new Callback<SubmitProject>() {
+                    @Override
+                    public void onResponse(Call<SubmitProject> call, Response<SubmitProject> response) {
+                        openDialog(R.layout.sucess_dialog);
+                        Log.d(TAG,  response.message());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SubmitProject> call, Throwable t) {
+                        openDialog(R.layout.failure_dialog);
+                        Log.d(TAG,  t.getMessage(), t);
+                    }
+
+                });
+            });
+            assert cancel != null;
+            cancel.setOnClickListener(v -> mDialog.dismiss());
+
+            }
+
         }
 
-        LeaderBoardService ideaService = ServiceBuilder.buildService(LeaderBoardService.class);
-        Call<SubmitProject> creatRequest = ideaService.submitProject(
-                projectSubmit.getEmailAddress(),
-                projectSubmit.getFirstName(),
-                projectSubmit.getLastName(),
-                projectSubmit.getLintToProject());
-        creatRequest.enqueue(new Callback<SubmitProject>() {
-            @Override
-            public void onResponse(Call<SubmitProject> call, Response<SubmitProject> response) {
-                dialogsSuccess(R.layout.sucess_dialog);
-
-            }
-
-            @Override
-            public void onFailure(Call<SubmitProject> call, Throwable t) {
-                dialogsSuccess(R.layout.failure_dialog);
-            }
-        });
-    }
-
-    public void dialogsSuccess(int dialog_layout) {
-        mDialog = new AlertDialog.Builder(SubmitActivity.this);
-        mMAlertDialog = mDialog.create();
+    public void openDialog(int dialog_layout) {
+        mDialog = new BottomSheetDialog(SubmitActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         mMyviews = inflater.inflate(dialog_layout, null);
-        mDialog.setView(mMyviews);
+        mDialog.setContentView(mMyviews);
         mDialog.show();
     }
 
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.cancel_submission:
-                mMAlertDialog.dismiss();
-                break;
-            case R.id.sure_btn:
-                projectSumit(mFirstName, mLastName, mEmaildress, mGitHubLink);
-                break;
-        }
-    }
 }
 
 

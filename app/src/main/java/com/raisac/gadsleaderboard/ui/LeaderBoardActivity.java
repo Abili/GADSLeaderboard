@@ -54,7 +54,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         if (!isConnected) {
 
             View view = findViewById(R.id.view);
-            Snackbar.make(view, "NetWork Error", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "NetWork Error, check network", Snackbar.LENGTH_LONG)
                     .setAction("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
