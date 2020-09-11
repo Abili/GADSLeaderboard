@@ -66,13 +66,5 @@
     </androidx.viewpager.widget.ViewPager>
 
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@android:color/black"
-        app:srcCompat="@android:drawable/ic_search_category_default" />
+    
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

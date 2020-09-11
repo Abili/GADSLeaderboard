@@ -16,7 +16,7 @@
             android:name=".ui.LeaderBoardActivity"
             android:label="@string/title_activity_leader_board"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.SubmitActivity"
             android:theme="@style/AppTheme.NoActionBar"

@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +18,7 @@ import com.raisac.gadsleaderboard.models.LearnersResponse;
 import com.raisac.gadsleaderboard.viewmodel.LearnersViewModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -49,11 +45,13 @@ public class PlaceholderFragment extends Fragment implements LeaderBoardAdapter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCardList = new ArrayList<>();
+
         mLeaderBoardAdapter = new LeaderBoardAdapter(this);
 //        mCompositeDisposable = new CompositeDisposable();
 
         mLearnersViewModel = new ViewModelProvider(this).get(LearnersViewModel.class);
         mLearnersViewModel.init();
+
         mLearnersViewModel.getLearnersData().observe(this, cardsResponse -> {
 
             if (cardsResponse != null) {
@@ -62,7 +60,7 @@ public class PlaceholderFragment extends Fragment implements LeaderBoardAdapter.
                 mLeaderBoardAdapter.notifyDataSetChanged();
             }
         });
-    }
+       }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,7 +70,7 @@ public class PlaceholderFragment extends Fragment implements LeaderBoardAdapter.
         final RecyclerView recyclerView = root.findViewById(R.id.section_label);
         mProgressBar = root.findViewById(R.id.progressBar);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mLeaderBoardAdapter);
         return root;
     }

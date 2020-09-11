@@ -6,7 +6,6 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raisac.gadsleaderboard.MainActivity;
 import com.raisac.gadsleaderboard.R;
 
 public class SplashScreen extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.raisac.gadsleaderboard;
+package com.raisac.gadsleaderboard.helpers;
 
 /**
  * Created by User on 2/7/2018.

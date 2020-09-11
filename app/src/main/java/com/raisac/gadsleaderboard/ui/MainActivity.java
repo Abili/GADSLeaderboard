@@ -1,8 +1,10 @@
-package com.raisac.gadsleaderboard;
+package com.raisac.gadsleaderboard.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.raisac.gadsleaderboard.R;
 
 public class MainActivity extends AppCompatActivity {
 

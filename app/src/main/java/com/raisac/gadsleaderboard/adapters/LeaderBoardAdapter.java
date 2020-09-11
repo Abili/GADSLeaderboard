@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.raisac.gadsleaderboard.R;
-import com.raisac.gadsleaderboard.StringUtil;
+import com.raisac.gadsleaderboard.helpers.StringUtil;
 import com.raisac.gadsleaderboard.models.LearnersResponse;
 import com.squareup.picasso.Picasso;
 

@@ -100,6 +100,7 @@ public class SubmitActivity extends AppCompatActivity {
 
             assert sure != null;
             sure.setOnClickListener(v -> {
+                mDialog.dismiss();
                 LeaderBoardService ideaService = ServiceBuilder.buildService(LeaderBoardService.class);
                 Call<SubmitProject> creatRequest = ideaService.submitProject(
                         projectSubmit.getEmailAddress(),
