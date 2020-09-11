@@ -111,6 +111,10 @@ public class SubmitActivity extends AppCompatActivity {
                                     Log.d(TAG, response.message());
                                 } else {
                                     openDialog(R.layout.sucess_dialog);
+                                    mFirstName.setText("");
+                                    mLastName.setText("");
+                                    mEmaildress.setText("");
+                                    mGitHubLink.setText("");
                                 }
 
                             }
