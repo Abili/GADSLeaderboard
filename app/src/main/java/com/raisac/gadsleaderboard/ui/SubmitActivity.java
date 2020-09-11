@@ -19,9 +19,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.raisac.gadsleaderboard.R;
 import com.raisac.gadsleaderboard.apis.LeaderBoardService;
-import com.raisac.gadsleaderboard.apis.ServiceBuilder;
 import com.raisac.gadsleaderboard.models.LearnersResponse;
 import com.raisac.gadsleaderboard.models.SubmitProject;
+import com.raisac.gadsleaderboard.repository.SubmitRepo;
 
 import java.util.List;
 
@@ -67,26 +67,26 @@ public class SubmitActivity extends AppCompatActivity {
         mGitHubLink = findViewById(R.id.githubLink);
 
         submit.setOnClickListener(view -> {
-            projectSumit(mFirstName, mLastName, mEmaildress, mGitHubLink);
+            projectSumit();
 
         });
     }
 
-    private void projectSumit(EditText firstName, EditText lastName, EditText emaildress, EditText gitHubLink) {
+    private void projectSumit() {
         SubmitProject projectSubmit = new SubmitProject();
-        String firs_name = firstName.getText().toString();
-        String last_name = lastName.getText().toString();
-        String email = emaildress.getText().toString();
-        String github = gitHubLink.getText().toString();
+        String firs_name = mFirstName.getText().toString();
+        String last_name = mLastName.getText().toString();
+        String email = mEmaildress.getText().toString();
+        String github = mGitHubLink.getText().toString();
 
-        if (TextUtils.isEmpty(firs_name)) {
-            firstName.setError("Required");
+        if (TextUtils.isEmpty(firs_name) && firs_name.length() < 2) {
+            mFirstName.setError("Required");
         } else if (TextUtils.isEmpty(last_name)) {
-            lastName.setError("Required");
+            mLastName.setError("Required");
         } else if (TextUtils.isEmpty(email)) {
-            emaildress.setError("Required");
+            mEmaildress.setError("Required");
         } else if (TextUtils.isEmpty(github)) {
-            gitHubLink.setError("Required");
+            mGitHubLink.setError("Required");
         } else {
             openDialog(R.layout.areyou_sure_dialog);
 
@@ -101,34 +101,34 @@ public class SubmitActivity extends AppCompatActivity {
             assert sure != null;
             sure.setOnClickListener(v -> {
                 mDialog.dismiss();
-                LeaderBoardService ideaService = ServiceBuilder.buildService(LeaderBoardService.class);
-                Call<SubmitProject> creatRequest = ideaService.submitProject(
-                        projectSubmit.getEmailAddress(),
-                        projectSubmit.getFirstName(),
-                        projectSubmit.getLastName(),
-                        projectSubmit.getLintToProject());
-                creatRequest.enqueue(new Callback<SubmitProject>() {
-                    @Override
-                    public void onResponse(Call<SubmitProject> call, Response<SubmitProject> response) {
-                        openDialog(R.layout.sucess_dialog);
-                        Log.d(TAG,  response.message());
+                SubmitRepo.Submit
+                        .submitProject(email, firs_name, last_name, github)
+                        .enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (!response.isSuccessful()) {
+                                    openDialog(R.layout.failure_dialog);
+                                    Log.d(TAG, response.message());
+                                } else {
+                                    openDialog(R.layout.sucess_dialog);
+                                }
 
-                    }
+                            }
 
-                    @Override
-                    public void onFailure(Call<SubmitProject> call, Throwable t) {
-                        openDialog(R.layout.failure_dialog);
-                        Log.d(TAG,  t.getMessage(), t);
-                    }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                openDialog(R.layout.failure_dialog);
+                                Log.d(TAG, t.getMessage(), t);
+                            }
 
-                });
+                        });
             });
             assert cancel != null;
             cancel.setOnClickListener(v -> mDialog.dismiss());
 
-            }
-
         }
+
+    }
 
     public void openDialog(int dialog_layout) {
         mDialog = new BottomSheetDialog(SubmitActivity.this);
