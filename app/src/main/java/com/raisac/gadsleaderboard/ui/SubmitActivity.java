@@ -1,6 +1,8 @@
 package com.raisac.gadsleaderboard.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -140,6 +142,7 @@ public class SubmitActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         mMyviews = inflater.inflate(dialog_layout, null);
         nDialog.setView(mMyviews);
+        nDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         nDialog.show();
     }
 
