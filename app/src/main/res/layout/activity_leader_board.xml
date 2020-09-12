@@ -31,21 +31,23 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:ignore="RtlCompat" />
 
-            <Button
+            <TextView
                 android:id="@+id/submit_project"
+                android:padding="@dimen/appbar_padding"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/round"
                 android:minHeight="?actionBarSize"
                 android:onClick="submitProject"
                 android:text="@string/submit"
+                android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_18sp" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textsize_18sp"
+                tools:ignore="RtlCompat" />
         </LinearLayout>
 
 
