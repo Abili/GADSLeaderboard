@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/round">
+    android:background="@drawable/round"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +25,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:text="Are you sure?"
-            android:textSize="24dp"
+            android:text="@string/are_you_sure"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <Button
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_sure"
             android:textColor="@android:color/holo_orange_dark"
-            android:text="Yes"
+            android:text="@string/yes"
             android:textSize="15sp" />
     </LinearLayout>
 

@@ -15,4 +15,6 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="submission_sucessful">Submission Sucessful</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
 </resources>

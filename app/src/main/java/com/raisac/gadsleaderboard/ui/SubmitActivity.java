@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.raisac.gadsleaderboard.R;
 import com.raisac.gadsleaderboard.apis.LeaderBoardService;
 import com.raisac.gadsleaderboard.models.LearnersResponse;
@@ -38,13 +37,14 @@ public class SubmitActivity extends AppCompatActivity {
     private MutableLiveData<List<LearnersResponse>> mListMutableLiveData;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     String keyword;
-    private BottomSheetDialog mDialog;
+    private AlertDialog.Builder mDialog;
     private View mMyviews;
     private EditText mFirstName;
     private EditText mLastName;
     private EditText mEmaildress;
     private EditText mGitHubLink;
     private AlertDialog mMAlertDialog;
+    private AlertDialog nDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +95,12 @@ public class SubmitActivity extends AppCompatActivity {
             projectSubmit.setEmailAddress(email);
             projectSubmit.setLintToProject(github);
 
-            Button sure = mDialog.findViewById(R.id.sure_btn);
-            ImageView cancel = mDialog.findViewById(R.id.cancel_submission);
+            Button sure = nDialog.findViewById(R.id.sure_btn);
+            ImageView cancel = nDialog.findViewById(R.id.cancel_submission);
 
             assert sure != null;
             sure.setOnClickListener(v -> {
-                mDialog.dismiss();
+                nDialog.dismiss();
                 SubmitRepo.Submit
                         .submitProject(email, firs_name, last_name, github)
                         .enqueue(new Callback<Void>() {
@@ -128,18 +128,19 @@ public class SubmitActivity extends AppCompatActivity {
                         });
             });
             assert cancel != null;
-            cancel.setOnClickListener(v -> mDialog.dismiss());
+            cancel.setOnClickListener(v -> nDialog.dismiss());
 
         }
 
     }
 
     public void openDialog(int dialog_layout) {
-        mDialog = new BottomSheetDialog(SubmitActivity.this);
+        mDialog = new AlertDialog.Builder(SubmitActivity.this);
+        nDialog = mDialog.create();
         LayoutInflater inflater = getLayoutInflater();
         mMyviews = inflater.inflate(dialog_layout, null);
-        mDialog.setContentView(mMyviews);
-        mDialog.show();
+        nDialog.setView(mMyviews);
+        nDialog.show();
     }
 
 }
