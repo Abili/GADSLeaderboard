@@ -13,20 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.DialogDetails"
+            android:theme="@android:style/Animation.Dialog" />
+        <activity
             android:name=".ui.LeaderBoardActivity"
             android:label="@string/title_activity_leader_board"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.SubmitActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.SubmitActivity" />
         </activity>
-
-        <activity android:name=".ui.SplashScreen"
+        <activity
+            android:name=".ui.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

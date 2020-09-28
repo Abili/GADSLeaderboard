@@ -20,11 +20,11 @@ public class ServiceBuilder {
     private static final String SUBMIT_URL = "https://docs.google.com/forms/d/e/";
 
     //creater logger
-    private static HttpLoggingInterceptor logger =
+    private static final HttpLoggingInterceptor logger =
             new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
     //create http client
-    private static OkHttpClient.Builder sOkHttp = new OkHttpClient.Builder()
+    private static final OkHttpClient.Builder sOkHttp = new OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(new Interceptor() {
                 @NotNull
@@ -41,13 +41,13 @@ public class ServiceBuilder {
             })
             .addInterceptor(logger);
 
-    private static Retrofit.Builder mBuilder = new Retrofit.Builder()
+    private static final Retrofit.Builder mBuilder = new Retrofit.Builder()
             .baseUrl(SUBMIT_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(sOkHttp.build()); /*tell retrofit to use the interceptor*/
 
 
-    private static Retrofit sRetrofit = mBuilder.build();
+    private static final Retrofit sRetrofit = mBuilder.build();
 
     public static <S> S buildService(Class<S> buildType) {
         return sRetrofit.create(buildType);

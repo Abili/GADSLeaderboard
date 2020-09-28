@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -47,6 +50,12 @@ public class SubmitActivity extends AppCompatActivity {
     private EditText mGitHubLink;
     private AlertDialog mMAlertDialog;
     private AlertDialog nDialog;
+    private ProgressBar progressBar;
+    private int progressStatus = 0;
+    private TextView textView;
+    private final Handler handler = new Handler();
+    private ProgressBar mProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,11 +121,8 @@ public class SubmitActivity extends AppCompatActivity {
                                     openDialog(R.layout.failure_dialog);
                                     Log.d(TAG, response.message());
                                 } else {
-                                    openDialog(R.layout.sucess_dialog);
-                                    mFirstName.setText("");
-                                    mLastName.setText("");
-                                    mEmaildress.setText("");
-                                    mGitHubLink.setText("");
+                                    openDialog(R.layout.progress_bar);
+                                    progress();
                                 }
 
                             }
@@ -146,6 +152,42 @@ public class SubmitActivity extends AppCompatActivity {
         nDialog.show();
     }
 
+    public void progress() {
+        mProgressBar = nDialog.findViewById(R.id.progressBar);
+        textView = nDialog.findViewById(R.id.textView);
+
+        // Start long running operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (progressStatus < 100) {
+                    progressStatus += 1;
+                    // Update the progress bar and display the
+                    //current value in the text view
+                    handler.post(new Runnable() {
+                        public void run() {
+                            mProgressBar.setProgress(progressStatus);
+                            textView.setText(progressStatus + "/" + mProgressBar.getMax());
+
+                            if (progressStatus == 100) {
+                                nDialog.dismiss();
+                                openDialog(R.layout.sucess_dialog);
+                                mFirstName.setText("");
+                                mLastName.setText("");
+                                mEmaildress.setText("");
+                                mGitHubLink.setText("");
+                            }
+                        }
+                    });
+                    try {
+                        // Sleep for 200 milliseconds.
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
 }
 
 

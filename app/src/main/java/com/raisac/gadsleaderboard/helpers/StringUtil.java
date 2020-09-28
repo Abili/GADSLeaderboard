@@ -7,10 +7,10 @@ package com.raisac.gadsleaderboard.helpers;
 public class StringUtil {
 
     public static String convertIntToString(int value){
-        return (String.valueOf(value) + " Learning Hours,");
+        return (value + " Learning Hours,");
     }
     public static String skillIQToString(int value){
-        return (String.valueOf(value) + " Skill IQ Score,");
+        return (value + " Skill IQ Score,");
     }
 
 

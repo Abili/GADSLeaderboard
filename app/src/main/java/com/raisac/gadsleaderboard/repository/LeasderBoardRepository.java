@@ -1,9 +1,6 @@
 package com.raisac.gadsleaderboard.repository;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.raisac.gadsleaderboard.apis.LeaderBoardService;
 import com.raisac.gadsleaderboard.models.LearnersResponse;
 
-import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -23,13 +19,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.net.ConnectivityManager.EXTRA_NO_CONNECTIVITY;
-
 public class LeasderBoardRepository {
     private static final String LEADERBOARD_URL = "https://gadsapi.herokuapp.com/";
 
-    private LeaderBoardService mLeaderBoardService;
-    private MutableLiveData<List<LearnersResponse>> mListMutableLiveData;
+    private final LeaderBoardService mLeaderBoardService;
+    private final MutableLiveData<List<LearnersResponse>> mListMutableLiveData;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     String keyword;
     Context mContext;

@@ -1,18 +1,15 @@
 package com.raisac.gadsleaderboard.apis;
 
 import com.raisac.gadsleaderboard.models.LearnersResponse;
-import com.raisac.gadsleaderboard.models.SubmitProject;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface LeaderBoardService {
     @GET("api/hours")

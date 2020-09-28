@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder> {
     private List<LearnersResponse> mLearnersResponses = new ArrayList<>();
-    private OnDetailsListener mOnDetailsListener;
+    private final OnDetailsListener mOnDetailsListener;
 
     public LeaderBoardAdapter(OnDetailsListener onDetailsListener) {
         mOnDetailsListener = onDetailsListener;
@@ -77,7 +77,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         @BindView(R.id.learner_Image)
         ImageView learnerImage;
 
-        OnDetailsListener mOnDetailsListener;
+        final OnDetailsListener mOnDetailsListener;
 
         public ViewHolder(@NonNull View itemView, OnDetailsListener onDetailsListener) {
             super(itemView);
